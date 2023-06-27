@@ -1,8 +1,12 @@
 lockfileVersion: 5.4
 
 specifiers:
+  babylonjs: ^6.9.0
   typescript: ^5.0.2
   vite: ^4.3.9
+
+dependencies:
+  babylonjs: 6.9.0
 
 devDependencies:
   typescript: 5.1.3
@@ -207,6 +211,11 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /babylonjs/6.9.0:
+    resolution: {integrity: sha512-+nScb5evOFP7JHYPVbWg3z9porpQ3uNXALuSeMu2ppum47El0jIan9a5d8mhX+Od9DrlSK272Cc5VdhRSoB7Mw==}
+    requiresBuild: true
+    dev: false
 
   /esbuild/0.17.19:
     resolution: {integrity: sha512-XQ0jAPFkK/u3LcVRcvVHQcTIqD6E2H1fvZMA5dQPSOWb3suUbWbfbRf94pjc0bNzRYLfIrDRQXr7X+LHIm5oHw==}
