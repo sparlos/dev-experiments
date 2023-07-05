@@ -6,12 +6,37 @@ import HavokPhysics, { HavokPhysicsWithBindings } from '@babylonjs/havok'
 class Player {
   playerCollider: BABYLON.PhysicsAggregate
   camera: BABYLON.FreeCamera
+  _scene: BABYLON.Scene
+  _canvas: HTMLCanvasElement
 
   constructor(scene: BABYLON.Scene, canvas: HTMLCanvasElement) {
+    this._scene = scene
+    this._canvas = canvas
+
+    this.camera = this._createCamera()
+    this.playerCollider = this._createPlayerCollider(this.camera)
+  }
+
+  _createCamera() {
+    const camera = new BABYLON.FreeCamera(
+      'playerCamera',
+      new BABYLON.Vector3(0, 0, 0),
+      this._scene
+    )
+    camera.inputs.clear()
+    camera.inputs.add(
+      new LockedCameraControls<BABYLON.FreeCamera>(this._canvas)
+    )
+
+    camera.attachControl(this._canvas, true)
+    return camera
+  }
+
+  _createPlayerCollider(camera: BABYLON.FreeCamera) {
     const capsule = BABYLON.MeshBuilder.CreateCapsule(
       'playerCapsule',
       { radius: 1.25, height: 2.25 },
-      scene
+      this._scene
     )
     capsule.position = new BABYLON.Vector3(0, 1, -10)
     capsule.isVisible = false
@@ -19,7 +44,7 @@ class Player {
       capsule,
       BABYLON.PhysicsShapeType.CAPSULE,
       { mass: 1, friction: 1000, restitution: 0 },
-      scene
+      this._scene
     )
     capsule.isVisible = false
 
@@ -28,19 +53,9 @@ class Player {
       inertia: new BABYLON.Vector3(0, 0, 0),
     })
 
-    this.playerCollider = capsuleAggregate
-
-    this.camera = new BABYLON.FreeCamera(
-      'playerCamera',
-      new BABYLON.Vector3(0, 0, 0),
-      scene
-    )
     this.camera.parent = capsule
 
-    this.camera.inputs.clear()
-    this.camera.inputs.add(new LockedCameraControls<BABYLON.FreeCamera>(canvas))
-
-    this.camera.attachControl(canvas, true)
+    return capsuleAggregate
   }
 }
 
