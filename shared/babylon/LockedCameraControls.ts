@@ -8,6 +8,7 @@ export default class LockedCameraControls<TCamera extends BABYLON.FreeCamera>
   _x: number = 0
   _z: number = 0
   sensitivity = 300
+  updatePositionHandler: (e: MouseEvent) => void
 
   constructor(_canvas: HTMLCanvasElement) {
     this.canvas = _canvas
@@ -20,16 +21,13 @@ export default class LockedCameraControls<TCamera extends BABYLON.FreeCamera>
 
   lockChangeAlert() {
     if (document.pointerLockElement === this.canvas) {
-      document.addEventListener(
-        'mousemove',
-        this.updatePosition.bind(this),
-        false
-      )
+      this.updatePositionHandler = this.updatePosition.bind(this)
+
+      document.addEventListener('mousemove', this.updatePositionHandler, false)
     } else {
-      console.log('The pointer lock status is now unlocked')
       document.removeEventListener(
         'mousemove',
-        this.updatePosition.bind(this),
+        this.updatePositionHandler,
         false
       )
     }
