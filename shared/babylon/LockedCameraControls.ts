@@ -17,8 +17,18 @@ export default class LockedCameraControls<TCamera extends BABYLON.FreeCamera>
   }
 
   updatePosition(e: MouseEvent) {
+    let newXRotation =
+      this.camera.rotation.x +
+      (e.movementY ? e.movementY / this.sensitivity : 0)
+
+    if (newXRotation >= Math.PI / 2) {
+      newXRotation = Math.PI / 2
+    } else if (newXRotation <= -Math.PI / 2) {
+      newXRotation = -Math.PI / 2
+    }
+
     this.camera.rotation.y += e.movementX ? e.movementX / this.sensitivity : 0
-    this.camera.rotation.x += e.movementY ? e.movementY / this.sensitivity : 0
+    this.camera.rotation.x = newXRotation
   }
 
   lockChangeAlert() {
