@@ -7,6 +7,7 @@ export default class InputManager {
   _isMovingRight: boolean = false
   _isMovingForward: boolean = false
   _isMovingBackward: boolean = false
+  _isSprinting: boolean = false
 
   constructor(
     camera: BABYLON.FreeCamera,
@@ -31,6 +32,9 @@ export default class InputManager {
       KeyD: () => {
         this._isMovingRight = true
       },
+      ShiftLeft: () => {
+        this._isSprinting = true
+      },
     }
 
     const handler = map[e.code]
@@ -51,6 +55,9 @@ export default class InputManager {
       KeyD: () => {
         this._isMovingRight = false
       },
+      ShiftLeft: () => {
+        this._isSprinting = false
+      },
     }
 
     const handler = map[e.code]
@@ -63,7 +70,7 @@ export default class InputManager {
   }
 
   checkInputs() {
-    const speed = 10
+    const speed = this._isSprinting ? 15 : 10
     let x = 0
     let z = 0
 
