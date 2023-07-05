@@ -9,6 +9,8 @@ export default class LockedCameraControls<TCamera extends BABYLON.FreeCamera>
   _z: number = 0
   sensitivity = 300
   updatePositionHandler: (e: MouseEvent) => void
+  lockChangeAlertHandler: () => void
+  requestPointerLockHandler: () => void
 
   constructor(_canvas: HTMLCanvasElement) {
     this.canvas = _canvas
@@ -40,27 +42,26 @@ export default class LockedCameraControls<TCamera extends BABYLON.FreeCamera>
   }
 
   attachControl(noPreventDefault?: boolean | undefined): void {
+    this.lockChangeAlertHandler = this.lockChangeAlert.bind(this)
+    this.requestPointerLockHandler = this.requestPointerLock.bind(this)
+
     document.addEventListener(
       'pointerlockchange',
-      this.lockChangeAlert.bind(this),
+      this.lockChangeAlertHandler,
       false
     )
-    this.canvas.addEventListener(
-      'click',
-      this.requestPointerLock.bind(this),
-      false
-    )
+    this.canvas.addEventListener('click', this.requestPointerLockHandler, false)
   }
 
   detachControl() {
     document.removeEventListener(
       'pointerlockchange',
-      this.lockChangeAlert,
+      this.lockChangeAlertHandler,
       false
     )
     this.canvas.removeEventListener(
       'click',
-      this.requestPointerLock.bind(this),
+      this.requestPointerLockHandler,
       false
     )
   }
