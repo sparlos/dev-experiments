@@ -1,5 +1,5 @@
 import * as BABYLON from 'babylonjs'
-import Interactable from '../Interactable'
+import Interactable from '../types/Interactable'
 
 export default class SphereMan implements Interactable {
   aggregate: BABYLON.PhysicsAggregate

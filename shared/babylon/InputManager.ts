@@ -1,5 +1,5 @@
 import * as BABYLON from 'babylonjs'
-import { Player } from './BaseFirstPersonScene'
+import Player from './Player'
 
 export default class InputManager {
   _camera: BABYLON.FreeCamera
