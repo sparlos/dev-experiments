@@ -1,7 +1,7 @@
 import * as BABYLON from 'babylonjs'
 import BaseFirstPersonScene from '../shared/babylon/BaseFirstPersonScene'
 import './firstSimulation.scss'
-import SphereMan from '../shared/babylon/SphereMan'
+import SphereMan from '../shared/babylon/interactables/SphereMan'
 
 const firstPersonScene = await BaseFirstPersonScene.initialize()
 
