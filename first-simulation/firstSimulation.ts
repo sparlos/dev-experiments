@@ -17,6 +17,18 @@ firstPersonScene.addInteractable(
   )
 )
 
+firstPersonScene.addInteractable(
+  new SphereMan(
+    firstPersonScene.scene,
+    'sphereManTwo',
+    new BABYLON.Vector3(5, 1, 5),
+    () => {
+      // TODO: will need to trigger dialog system
+      alert('hello idiot I am sphere 2')
+    }
+  )
+)
+
 firstPersonScene.engine.runRenderLoop(function () {
   firstPersonScene.scene.render()
   firstPersonScene.inputManager.checkInputs()
