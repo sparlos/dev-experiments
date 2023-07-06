@@ -1,21 +1,21 @@
 import * as BABYLON from 'babylonjs'
+import { Player } from './BaseFirstPersonScene'
 
 export default class InputManager {
   _camera: BABYLON.FreeCamera
   _playerCollider: BABYLON.PhysicsAggregate
+  _player: Player
   _isMovingLeft: boolean = false
   _isMovingRight: boolean = false
   _isMovingForward: boolean = false
   _isMovingBackward: boolean = false
   _isSprinting: boolean = false
 
-  constructor(
-    camera: BABYLON.FreeCamera,
-    playerCollider: BABYLON.PhysicsAggregate
-  ) {
+  constructor(player: Player) {
     this._registerKeyboardControls()
-    this._camera = camera
-    this._playerCollider = playerCollider
+    this._player = player
+    this._camera = player.camera
+    this._playerCollider = player.playerCollider
   }
 
   private _handleKeyDown(e: KeyboardEvent) {
@@ -54,6 +54,10 @@ export default class InputManager {
       },
       KeyD: () => {
         this._isMovingRight = false
+      },
+      KeyE: () => {
+        this._player.currentInteractableCallback &&
+          this._player.currentInteractableCallback()
       },
       ShiftLeft: () => {
         this._isSprinting = false

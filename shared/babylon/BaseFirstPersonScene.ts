@@ -2,16 +2,33 @@ import * as BABYLON from 'babylonjs'
 import LockedCameraControls from './LockedCameraControls'
 import InputManager from './InputManager'
 import HavokPhysics, { HavokPhysicsWithBindings } from '@babylonjs/havok'
+import Interactable from './Interactable'
 
-class Player {
+export interface InteractableMap {
+  [key: string]: Interactable
+}
+
+export class Player {
   playerCollider: BABYLON.PhysicsAggregate
   camera: BABYLON.FreeCamera
   _scene: BABYLON.Scene
   _canvas: HTMLCanvasElement
+  _physicsEngine: BABYLON.HavokPlugin
+  _raycastResult: BABYLON.PhysicsRaycastResult =
+    new BABYLON.PhysicsRaycastResult()
+  _interactableMap: InteractableMap
+  currentInteractableCallback?: () => void
 
-  constructor(scene: BABYLON.Scene, canvas: HTMLCanvasElement) {
+  constructor(
+    scene: BABYLON.Scene,
+    canvas: HTMLCanvasElement,
+    physicsEngine: BABYLON.HavokPlugin,
+    interactableMap: InteractableMap
+  ) {
     this._scene = scene
     this._canvas = canvas
+    this._physicsEngine = physicsEngine
+    this._interactableMap = interactableMap
 
     this.camera = this._createCamera()
     this.playerCollider = this._createPlayerCollider(this.camera)
@@ -57,6 +74,19 @@ class Player {
 
     return capsuleAggregate
   }
+
+  checkInteractables() {
+    const start = this.playerCollider.transformNode.position
+    const end = start.add(this.camera.getForwardRay().direction.scale(5))
+
+    this._physicsEngine.raycast(start, end, this._raycastResult, {
+      collideWith: 1,
+    })
+    const interactableName = this._raycastResult.body?.transformNode.name || ''
+    this.currentInteractableCallback = interactableName
+      ? this._interactableMap[interactableName]?.callback
+      : undefined
+  }
 }
 
 export default class BaseFirstPersonScene {
@@ -67,21 +97,33 @@ export default class BaseFirstPersonScene {
   ground: BABYLON.PhysicsAggregate
   player: Player
   inputManager: InputManager
+  physicsEngine: BABYLON.HavokPlugin
+  interactableMap: InteractableMap = {}
 
   constructor(havokInstance: HavokPhysicsWithBindings) {
     this.canvas = document.getElementById('canvas') as HTMLCanvasElement
     this.engine = new BABYLON.Engine(this.canvas, true)
     this.scene = new BABYLON.Scene(this.engine)
+    // enable debug
+    // this.scene.debugLayer.show()
 
     const havokPlugin = new BABYLON.HavokPlugin(true, havokInstance)
+    this.physicsEngine = havokPlugin
     this.scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0), havokPlugin)
     this.light = this._createLight()
     this.ground = this._createGround()
-    this.player = new Player(this.scene, this.canvas)
-    this.inputManager = new InputManager(
-      this.player.camera,
-      this.player.playerCollider
+    this.ground.shape.filterMembershipMask = 2
+    this.player = new Player(
+      this.scene,
+      this.canvas,
+      this.physicsEngine,
+      this.interactableMap
     )
+    this.inputManager = new InputManager(this.player)
+  }
+
+  addInteractable(interactable: Interactable) {
+    this.interactableMap[interactable.name] = interactable
   }
 
   private _createGround() {
