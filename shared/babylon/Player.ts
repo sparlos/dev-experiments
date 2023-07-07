@@ -35,9 +35,7 @@ export default class Player {
       this._scene
     )
     camera.inputs.clear()
-    camera.inputs.add(
-      new LockedCameraControls<BABYLON.FreeCamera>(this._canvas)
-    )
+    camera.inputs.add(new LockedCameraControls<BABYLON.FreeCamera>())
 
     camera.attachControl(this._canvas, true)
     return camera

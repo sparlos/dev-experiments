@@ -1,5 +1,6 @@
 export default class GUIDialog {
   overlayElement: HTMLDivElement
+  dialogTextElement: HTMLDivElement
   _isActive: boolean = false
   currentDialogIndex: number = 0
   dialog: string[] = []
@@ -10,6 +11,21 @@ export default class GUIDialog {
     this.overlayElement = document.createElement('div')
     this.overlayElement.classList.add('dialog-overlay')
     document.body.appendChild(this.overlayElement)
+    this._createContinueText()
+    this._createDialogText()
+  }
+
+  _createDialogText() {
+    this.dialogTextElement = document.createElement('div')
+    this.dialogTextElement.classList.add('dialog-overlay__dialog-text')
+    this.overlayElement.appendChild(this.dialogTextElement)
+  }
+
+  _createContinueText() {
+    const continueText = document.createElement('div')
+    continueText.classList.add('dialog-overlay__continue-text')
+    continueText.innerText = 'Click to continue'
+    this.overlayElement.appendChild(continueText)
   }
 
   get isActive(): boolean {
@@ -24,7 +40,7 @@ export default class GUIDialog {
 
   private _deactivate() {
     this._isActive = false
-    this.overlayElement.innerHTML = ''
+    this.dialogTextElement.innerText = ''
     this.overlayElement.classList.remove('dialog-overlay--active')
     this.deactivateCallback()
     document.removeEventListener('click', this.onClickHandler)
@@ -34,7 +50,7 @@ export default class GUIDialog {
     this.dialog = dialog
     this.currentDialogIndex = 0
     this._isActive = true
-    this.overlayElement.innerHTML = this.dialog[this.currentDialogIndex]
+    this.dialogTextElement.innerText = this.dialog[this.currentDialogIndex]
     this.overlayElement.classList.add('dialog-overlay--active')
     this.deactivateCallback = deactivateCallback
 
@@ -49,7 +65,7 @@ export default class GUIDialog {
   nextDialog(): void {
     if (this.currentDialogIndex < this.dialog.length - 1) {
       this.currentDialogIndex++
-      this.overlayElement.innerHTML = this.dialog[this.currentDialogIndex]
+      this.dialogTextElement.innerText = this.dialog[this.currentDialogIndex]
     } else {
       this._deactivate()
     }

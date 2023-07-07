@@ -1,21 +1,34 @@
 .dialog-overlay {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 50%;
     pointer-events: none;
     z-index: 1000;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.5);
     opacity: 0;
     pointer-events: none;
-    display: flex;
+    display: none;
     justify-content: center;
-    align-items: center;
+    padding-top: 2rem;
     color: white;
+    font-size: 3rem;
+    overflow: hidden;
+    margin-bottom: -3rem;
 
     &--active {
+        display: flex;
         pointer-events: auto;
         opacity: 1;
+    }
+
+    &__continue-text {
+        position: absolute;
+        bottom: 4rem;
+        right: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 1.5rem;
     }
 }

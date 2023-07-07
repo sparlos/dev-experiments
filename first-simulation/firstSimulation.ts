@@ -30,6 +30,16 @@ firstPersonScene.engine.runRenderLoop(function () {
   firstPersonScene.scene.render()
   firstPersonScene.inputManager.checkInputs()
   firstPersonScene.player.checkInteractables()
+  // TODO: move this into a function and maybe make it more performant
+  const canPlayerInteract =
+    !!firstPersonScene.player.currentInteractableCallback
+  const reticle = document.getElementById('reticle')
+  if (reticle) {
+    reticle.innerHTML =
+      canPlayerInteract && firstPersonScene.inputManager.canMove
+        ? 'Press E to interact'
+        : '.'
+  }
 })
 
 window.addEventListener('resize', function () {
