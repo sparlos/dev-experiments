@@ -4,17 +4,12 @@ export default class LockedCameraControls<TCamera extends BABYLON.FreeCamera>
   implements BABYLON.ICameraInput<TCamera>
 {
   camera: TCamera
-  canvas: HTMLCanvasElement
   _x: number = 0
   _z: number = 0
   sensitivity = 300
   updatePositionHandler: (e: MouseEvent) => void
   lockChangeAlertHandler: () => void
   requestPointerLockHandler: () => void
-
-  constructor(_canvas: HTMLCanvasElement) {
-    this.canvas = _canvas
-  }
 
   updatePosition(e: MouseEvent) {
     let newXRotation =
@@ -32,7 +27,7 @@ export default class LockedCameraControls<TCamera extends BABYLON.FreeCamera>
   }
 
   lockChangeAlert() {
-    if (document.pointerLockElement === this.canvas) {
+    if (document.pointerLockElement === document.body) {
       this.updatePositionHandler = this.updatePosition.bind(this)
 
       document.addEventListener('mousemove', this.updatePositionHandler, false)
@@ -47,7 +42,7 @@ export default class LockedCameraControls<TCamera extends BABYLON.FreeCamera>
 
   async requestPointerLock() {
     if (!document.pointerLockElement) {
-      await this.canvas.requestPointerLock()
+      await document.body.requestPointerLock()
     }
   }
 
@@ -55,7 +50,7 @@ export default class LockedCameraControls<TCamera extends BABYLON.FreeCamera>
     this.lockChangeAlertHandler = this.lockChangeAlert.bind(this)
     this.requestPointerLockHandler = this.requestPointerLock.bind(this)
 
-    if (document.pointerLockElement === this.canvas) {
+    if (document.pointerLockElement === document.body) {
       this.updatePositionHandler = this.updatePosition.bind(this)
 
       document.addEventListener('mousemove', this.updatePositionHandler, false)
@@ -66,7 +61,11 @@ export default class LockedCameraControls<TCamera extends BABYLON.FreeCamera>
       this.lockChangeAlertHandler,
       false
     )
-    this.canvas.addEventListener('click', this.requestPointerLockHandler, false)
+    document.body.addEventListener(
+      'click',
+      this.requestPointerLockHandler,
+      false
+    )
   }
 
   detachControl() {
@@ -75,7 +74,7 @@ export default class LockedCameraControls<TCamera extends BABYLON.FreeCamera>
       this.lockChangeAlertHandler,
       false
     )
-    this.canvas.removeEventListener(
+    document.body.removeEventListener(
       'click',
       this.requestPointerLockHandler,
       false

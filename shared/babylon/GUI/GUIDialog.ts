@@ -17,7 +17,9 @@ export default class GUIDialog {
   }
 
   set isActive(isActive: boolean) {
-    throw new Error('cannot set isActive directly, use activate method instead')
+    throw new Error(
+      'cannot set isActive directly, use activate/deactivate method instead'
+    )
   }
 
   private _deactivate() {
