@@ -1,8 +1,12 @@
 import * as BABYLON from 'babylonjs'
 import BaseFirstPersonScene from '../shared/babylon/BaseFirstPersonScene'
-import './firstSimulation.scss'
+import GUIDialog from '../shared/babylon/GUI/GUIDialog'
 import SphereMan from '../shared/babylon/interactables/SphereMan'
 
+import './firstSimulation.scss'
+import '../shared/babylon/GUI/guiDialog.scss'
+
+const guiDialog = new GUIDialog()
 const firstPersonScene = await BaseFirstPersonScene.initialize()
 
 firstPersonScene.addInteractable(
@@ -12,7 +16,8 @@ firstPersonScene.addInteractable(
     new BABYLON.Vector3(0, 1, 0),
     () => {
       // TODO: will need to trigger dialog system
-      alert('hello idiot')
+      guiDialog.isActive = true
+      firstPersonScene.disableControls()
     }
   )
 )

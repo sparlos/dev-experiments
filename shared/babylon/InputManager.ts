@@ -10,6 +10,7 @@ export default class InputManager {
   _isMovingForward: boolean = false
   _isMovingBackward: boolean = false
   _isSprinting: boolean = false
+  canMove: boolean = true
 
   constructor(player: Player) {
     this._registerKeyboardControls()
@@ -89,6 +90,11 @@ export default class InputManager {
     }
     if (this._isMovingRight) {
       x += speed
+    }
+
+    if (!this.canMove) {
+      x = 0
+      z = 0
     }
 
     const zAxisDirection = this._camera.getDirection(BABYLON.Axis.Z).scale(z)

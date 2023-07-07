@@ -41,6 +41,18 @@ export default class BaseFirstPersonScene {
     this.interactableMap[interactable.name] = interactable
   }
 
+  disableControls() {
+    this.inputManager.canMove = false
+    this.player.camera.inputs.attached.lockedCamera.detachControl()
+  }
+
+  enableControls() {
+    this.inputManager.canMove = true
+    this.player.camera.inputs.attachInput(
+      this.player.camera.inputs.attached.lockedCamera
+    )
+  }
+
   private _createGround() {
     const ground = BABYLON.MeshBuilder.CreateGround(
       'ground',

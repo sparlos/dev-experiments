@@ -55,6 +55,12 @@ export default class LockedCameraControls<TCamera extends BABYLON.FreeCamera>
     this.lockChangeAlertHandler = this.lockChangeAlert.bind(this)
     this.requestPointerLockHandler = this.requestPointerLock.bind(this)
 
+    if (document.pointerLockElement === this.canvas) {
+      this.updatePositionHandler = this.updatePosition.bind(this)
+
+      document.addEventListener('mousemove', this.updatePositionHandler, false)
+    }
+
     document.addEventListener(
       'pointerlockchange',
       this.lockChangeAlertHandler,
@@ -74,6 +80,7 @@ export default class LockedCameraControls<TCamera extends BABYLON.FreeCamera>
       this.requestPointerLockHandler,
       false
     )
+    document.removeEventListener('mousemove', this.updatePositionHandler, false)
   }
 
   getClassName(): string {
