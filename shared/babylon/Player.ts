@@ -76,7 +76,9 @@ export default class Player {
     this._physicsEngine.raycast(start, end, this._raycastResult, {
       collideWith: 1,
     })
-    const interactableName = this._raycastResult.body?.transformNode.name || ''
+    const interactableName = this._raycastResult.hasHit
+      ? this._raycastResult.body?.transformNode.name
+      : ''
     this.currentInteractableCallback = interactableName
       ? this._interactableMap[interactableName]?.callback
       : undefined

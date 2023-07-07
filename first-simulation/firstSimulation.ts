@@ -15,21 +15,13 @@ firstPersonScene.addInteractable(
     'sphereMan',
     new BABYLON.Vector3(0, 1, 0),
     () => {
-      // TODO: will need to trigger dialog system
-      guiDialog.isActive = true
       firstPersonScene.disableControls()
-    }
-  )
-)
-
-firstPersonScene.addInteractable(
-  new SphereMan(
-    firstPersonScene.scene,
-    'sphereManTwo',
-    new BABYLON.Vector3(5, 1, 5),
-    () => {
-      // TODO: will need to trigger dialog system
-      alert('hello idiot I am sphere 2')
+      guiDialog.activate(
+        ['Hello, I am Sphere Man.', 'Welcome to the office of spheres.'],
+        () => {
+          firstPersonScene.enableControls()
+        }
+      )
     }
   )
 )

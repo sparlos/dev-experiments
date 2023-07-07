@@ -1,5 +1,6 @@
 import * as BABYLON from 'babylonjs'
 import Interactable from '../types/Interactable'
+import Dialog from '../types/Dialog'
 
 export default class SphereMan implements Interactable {
   aggregate: BABYLON.PhysicsAggregate
