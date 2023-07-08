@@ -12,6 +12,11 @@ const firstPersonScene = await BaseFirstPersonScene.initialize()
 
 setupSphereMen(firstPersonScene, guiDialog)
 
+guiDialog.activate(
+  ['Click to start, WASD to move, no mobile yet sry'],
+  () => {}
+)
+
 firstPersonScene.engine.runRenderLoop(function () {
   firstPersonScene.update()
   reticle.update(firstPersonScene)
