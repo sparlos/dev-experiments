@@ -13,9 +13,7 @@ const firstPersonScene = await BaseFirstPersonScene.initialize()
 setupSphereMen(firstPersonScene, guiDialog)
 
 firstPersonScene.engine.runRenderLoop(function () {
-  firstPersonScene.scene.render()
-  firstPersonScene.inputManager.checkInputs()
-  firstPersonScene.player.checkInteractables()
+  firstPersonScene.update()
   reticle.update(firstPersonScene)
 })
 

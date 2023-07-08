@@ -37,6 +37,12 @@ export default class BaseFirstPersonScene {
     this.inputManager = new InputManager(this.player)
   }
 
+  update() {
+    this.scene.render()
+    this.inputManager.checkInputs()
+    this.player.checkInteractables()
+  }
+
   addInteractable(interactable: Interactable) {
     this.interactableMap[interactable.name] = interactable
   }
