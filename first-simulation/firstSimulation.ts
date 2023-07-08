@@ -1,45 +1,22 @@
-import * as BABYLON from 'babylonjs'
 import BaseFirstPersonScene from '../shared/babylon/BaseFirstPersonScene'
 import GUIDialog from '../shared/babylon/GUI/GUIDialog'
-import SphereMan from '../shared/babylon/interactables/SphereMan'
+import { setup as setupSphereMen } from './services/sphereMen'
 
 import './firstSimulation.scss'
 import '../shared/babylon/GUI/guiDialog.scss'
+import Reticle from '../shared/babylon/GUI/Reticle'
 
+const reticle = new Reticle()
 const guiDialog = new GUIDialog()
 const firstPersonScene = await BaseFirstPersonScene.initialize()
 
-firstPersonScene.addInteractable(
-  new SphereMan(
-    firstPersonScene.scene,
-    'sphereMan',
-    new BABYLON.Vector3(0, 1, 0),
-    () => {
-      firstPersonScene.disableControls()
-      guiDialog.activate(
-        ['Hello, I am Sphere Man.', 'Welcome to the office of spheres.'],
-        () => {
-          firstPersonScene.enableControls()
-        }
-      )
-    }
-  )
-)
+setupSphereMen(firstPersonScene, guiDialog)
 
 firstPersonScene.engine.runRenderLoop(function () {
   firstPersonScene.scene.render()
   firstPersonScene.inputManager.checkInputs()
   firstPersonScene.player.checkInteractables()
-  // TODO: move this into a function and maybe make it more performant
-  const canPlayerInteract =
-    !!firstPersonScene.player.currentInteractableCallback
-  const reticle = document.getElementById('reticle')
-  if (reticle) {
-    reticle.innerHTML =
-      canPlayerInteract && firstPersonScene.inputManager.canMove
-        ? 'Press E to interact'
-        : '.'
-  }
+  reticle.update(firstPersonScene)
 })
 
 window.addEventListener('resize', function () {

@@ -53,6 +53,10 @@ export default class BaseFirstPersonScene {
     )
   }
 
+  canPlayerInteract() {
+    return !!this.player.currentInteractableCallback
+  }
+
   private _createGround() {
     const ground = BABYLON.MeshBuilder.CreateGround(
       'ground',
