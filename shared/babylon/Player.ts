@@ -1,22 +1,30 @@
-import * as BABYLON from 'babylonjs'
+import {
+  Scene,
+  PhysicsAggregate,
+  HavokPlugin,
+  Vector3,
+  MeshBuilder,
+  PhysicsShapeType,
+  FreeCamera,
+  PhysicsRaycastResult,
+} from '@babylonjs/core'
 import LockedCameraControls from './LockedCameraControls'
 import { InteractableMap } from './types/Interactable'
 
 export default class Player {
-  playerCollider: BABYLON.PhysicsAggregate
-  camera: BABYLON.FreeCamera
-  _scene: BABYLON.Scene
+  playerCollider: PhysicsAggregate
+  camera: FreeCamera
+  _scene: Scene
   _canvas: HTMLCanvasElement
-  _physicsEngine: BABYLON.HavokPlugin
-  _raycastResult: BABYLON.PhysicsRaycastResult =
-    new BABYLON.PhysicsRaycastResult()
+  _physicsEngine: HavokPlugin
+  _raycastResult: PhysicsRaycastResult = new PhysicsRaycastResult()
   _interactableMap: InteractableMap
   currentInteractableCallback?: () => void
 
   constructor(
-    scene: BABYLON.Scene,
+    scene: Scene,
     canvas: HTMLCanvasElement,
-    physicsEngine: BABYLON.HavokPlugin,
+    physicsEngine: HavokPlugin,
     interactableMap: InteractableMap
   ) {
     this._scene = scene
@@ -29,29 +37,29 @@ export default class Player {
   }
 
   _createCamera() {
-    const camera = new BABYLON.FreeCamera(
+    const camera = new FreeCamera(
       'playerCamera',
-      new BABYLON.Vector3(0, 0, 0),
+      new Vector3(0, 0, 0),
       this._scene
     )
     camera.inputs.clear()
-    camera.inputs.add(new LockedCameraControls<BABYLON.FreeCamera>())
+    camera.inputs.add(new LockedCameraControls<FreeCamera>())
 
     camera.attachControl(this._canvas, true)
     return camera
   }
 
-  _createPlayerCollider(camera: BABYLON.FreeCamera) {
-    const capsule = BABYLON.MeshBuilder.CreateCapsule(
+  _createPlayerCollider(camera: FreeCamera) {
+    const capsule = MeshBuilder.CreateCapsule(
       'playerCapsule',
       { radius: 1.25, height: 2.25 },
       this._scene
     )
-    capsule.position = new BABYLON.Vector3(0, 1, -10)
+    capsule.position = new Vector3(0, 1, -10)
     capsule.isVisible = false
-    const capsuleAggregate = new BABYLON.PhysicsAggregate(
+    const capsuleAggregate = new PhysicsAggregate(
       capsule,
-      BABYLON.PhysicsShapeType.CAPSULE,
+      PhysicsShapeType.CAPSULE,
       { mass: 1, friction: 1000, restitution: 0 },
       this._scene
     )
@@ -59,7 +67,7 @@ export default class Player {
 
     capsuleAggregate.body.setMassProperties({
       mass: 1,
-      inertia: new BABYLON.Vector3(0, 0, 0),
+      inertia: new Vector3(0, 0, 0),
     })
 
     this.camera.parent = capsule

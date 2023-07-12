@@ -1,7 +1,7 @@
-import * as BABYLON from 'babylonjs'
+import { FreeCamera, ICameraInput } from '@babylonjs/core'
 
-export default class LockedCameraControls<TCamera extends BABYLON.FreeCamera>
-  implements BABYLON.ICameraInput<TCamera>
+export default class LockedCameraControls<TCamera extends FreeCamera>
+  implements ICameraInput<TCamera>
 {
   camera: TCamera
   _x: number = 0

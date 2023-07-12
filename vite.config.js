@@ -11,6 +11,6 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    exclude: ['@babylonjs/havok', 'babylonjs-loaders'],
+    exclude: ['@babylonjs/havok'],
   },
 })

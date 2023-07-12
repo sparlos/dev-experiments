@@ -1,9 +1,9 @@
-import * as BABYLON from 'babylonjs'
+import { FreeCamera, PhysicsAggregate, Vector3, Axis } from '@babylonjs/core'
 import Player from './Player'
 
 export default class InputManager {
-  _camera: BABYLON.FreeCamera
-  _playerCollider: BABYLON.PhysicsAggregate
+  _camera: FreeCamera
+  _playerCollider: PhysicsAggregate
   _player: Player
   _isMovingLeft: boolean = false
   _isMovingRight: boolean = false
@@ -97,15 +97,15 @@ export default class InputManager {
       z = 0
     }
 
-    const zAxisDirection = this._camera.getDirection(BABYLON.Axis.Z).scale(z)
+    const zAxisDirection = this._camera.getDirection(Axis.Z).scale(z)
 
-    const xAxisDirection = this._camera.getDirection(BABYLON.Axis.X).scale(x)
+    const xAxisDirection = this._camera.getDirection(Axis.X).scale(x)
 
     const zVelocity = zAxisDirection.z + xAxisDirection.z
     const xVelocity = zAxisDirection.x + xAxisDirection.x
 
     this._playerCollider.body.setLinearVelocity(
-      new BABYLON.Vector3(xVelocity, -9.81, zVelocity)
+      new Vector3(xVelocity, -9.81, zVelocity)
     )
   }
 }

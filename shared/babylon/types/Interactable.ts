@@ -1,11 +1,11 @@
-import * as BABYLON from 'babylonjs'
+import { PhysicsAggregate } from '@babylonjs/core'
 
 export interface InteractableMap {
   [key: string]: Interactable
 }
 
 export default interface Interactable {
-  aggregate: BABYLON.PhysicsAggregate
+  aggregate: PhysicsAggregate
   name: string
   callback: () => void
 }
