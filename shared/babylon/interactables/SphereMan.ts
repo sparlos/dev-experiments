@@ -1,6 +1,6 @@
 import * as BABYLON from 'babylonjs'
+import 'babylonjs-loaders'
 import Interactable from '../types/Interactable'
-import Dialog from '../types/Dialog'
 
 export default class SphereMan implements Interactable {
   aggregate: BABYLON.PhysicsAggregate
@@ -16,24 +16,34 @@ export default class SphereMan implements Interactable {
     callback: () => void
   ) {
     this.name = name
-
-    const sphere = BABYLON.MeshBuilder.CreateSphere(
-      name,
-      { diameter: 2 },
-      scene
-    )
-
-    sphere.position = defaultPosition
-
-    const sphereAggregate = new BABYLON.PhysicsAggregate(
-      sphere,
-      BABYLON.PhysicsShapeType.SPHERE,
-      { mass: 0 },
-      scene
-    )
-
-    sphereAggregate.shape.filterMembershipMask = 1
-
     this.callback = callback
+
+    BABYLON.SceneLoader.ImportMesh(
+      'Sphere',
+      '/assets/first-simulation/',
+      'sphereman.gltf',
+      scene,
+      (meshes) => {
+        const sphere = meshes[1]
+        sphere.position = defaultPosition
+        sphere.rotation = new BABYLON.Vector3(
+          0,
+          BABYLON.Tools.ToRadians(115),
+          0
+        )
+        sphere.name = name
+
+        sphere.position = defaultPosition
+
+        const sphereAggregate = new BABYLON.PhysicsAggregate(
+          sphere,
+          BABYLON.PhysicsShapeType.SPHERE,
+          { mass: 0 },
+          scene
+        )
+
+        sphereAggregate.shape.filterMembershipMask = 1
+      }
+    )
   }
 }

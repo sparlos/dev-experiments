@@ -16,6 +16,7 @@
     "@babylonjs/havok": "^1.0.1",
     "@babylonjs/inspector": "^6.10.0",
     "babylonjs": "^6.9.0",
+    "babylonjs-loaders": "^6.11.2",
     "sass": "^1.63.6"
   }
 }

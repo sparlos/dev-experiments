@@ -4,6 +4,7 @@ specifiers:
   '@babylonjs/havok': ^1.0.1
   '@babylonjs/inspector': ^6.10.0
   babylonjs: ^6.9.0
+  babylonjs-loaders: ^6.11.2
   sass: ^1.63.6
   typescript: ^5.0.2
   vite: ^4.3.9
@@ -12,6 +13,7 @@ dependencies:
   '@babylonjs/havok': 1.0.1
   '@babylonjs/inspector': 6.10.0_kt3cvoee6hht2uagxdx5hmbr3u
   babylonjs: 6.9.0
+  babylonjs-loaders: 6.11.2
   sass: 1.63.6
 
 devDependencies:
@@ -67,9 +69,9 @@ packages:
       '@babylonjs/core': 6.10.0
       '@babylonjs/gui': 6.10.0_@babylonjs+core@6.10.0
       '@babylonjs/gui-editor': 6.10.0_j4zrcb2se5h2anh55chyse3jfu
-      '@babylonjs/loaders': 6.10.0_wkanhtpvjkokv5zn6ydug5nkpa
+      '@babylonjs/loaders': 6.10.0_khuffygtln7tirsgjnmd73aaby
       '@babylonjs/materials': 6.10.0_@babylonjs+core@6.10.0
-      '@babylonjs/serializers': 6.10.0_wkanhtpvjkokv5zn6ydug5nkpa
+      '@babylonjs/serializers': 6.10.0_khuffygtln7tirsgjnmd73aaby
       '@fortawesome/fontawesome-svg-core': 6.4.0
       '@fortawesome/free-regular-svg-icons': 6.4.0
       '@fortawesome/free-solid-svg-icons': 6.4.0
@@ -77,14 +79,14 @@ packages:
       '@types/react-dom': 18.2.6
     dev: false
 
-  /@babylonjs/loaders/6.10.0_wkanhtpvjkokv5zn6ydug5nkpa:
+  /@babylonjs/loaders/6.10.0_khuffygtln7tirsgjnmd73aaby:
     resolution: {integrity: sha512-o74WWyDohWLU/yhPjcm1ndDa7hTdtgMgWSew7T1mZNgNJvAOgEPz1XWv79+77XfiKc8MKaZXj14RUm2/7Rf1Qg==}
     peerDependencies:
       '@babylonjs/core': ^6.0.0
       babylonjs-gltf2interface: ^6.0.0
     dependencies:
       '@babylonjs/core': 6.10.0
-      babylonjs-gltf2interface: 6.10.0
+      babylonjs-gltf2interface: 6.11.2
     dev: false
 
   /@babylonjs/materials/6.10.0_@babylonjs+core@6.10.0:
@@ -95,14 +97,14 @@ packages:
       '@babylonjs/core': 6.10.0
     dev: false
 
-  /@babylonjs/serializers/6.10.0_wkanhtpvjkokv5zn6ydug5nkpa:
+  /@babylonjs/serializers/6.10.0_khuffygtln7tirsgjnmd73aaby:
     resolution: {integrity: sha512-NZDaVWg55VKIVxtcYVTRBc22Bq/WeONNCENF1uACFWnQJ4QzZpn8bRzXedlIODmBcR7huxLWX1sebsDNzduHSQ==}
     peerDependencies:
       '@babylonjs/core': ^6.0.0
       babylonjs-gltf2interface: ^6.0.0
     dependencies:
       '@babylonjs/core': 6.10.0
-      babylonjs-gltf2interface: 6.10.0
+      babylonjs-gltf2interface: 6.11.2
     dev: false
 
   /@esbuild/android-arm/0.17.19:
@@ -366,8 +368,20 @@ packages:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
-  /babylonjs-gltf2interface/6.10.0:
-    resolution: {integrity: sha512-jvpujIGV3DyiRa6p94N/IPuD/l3hZ9QCZj39ocu8TcT61OS/X9y5Pfl9btO7laH5ulGX4XxhTx0JFEcojUuRMQ==}
+  /babylonjs-gltf2interface/6.11.2:
+    resolution: {integrity: sha512-iiaIcKUvIhV/dHg4YjMJ9F4PvZj5j1tljW8cIxITzxCKZQqx0roeU5QQWQCsh3kgiOXHzBdXJuHgpGcA4qOiDQ==}
+    dev: false
+
+  /babylonjs-loaders/6.11.2:
+    resolution: {integrity: sha512-esq8ErKL/CrdTs6JVJzyxhDHBektIrkuf80I9AQSDV6DwWNgxVjHVN/BkCPrCaQdCSIV3LjTz0S69TpiIYwoSw==}
+    dependencies:
+      babylonjs: 6.11.2
+      babylonjs-gltf2interface: 6.11.2
+    dev: false
+
+  /babylonjs/6.11.2:
+    resolution: {integrity: sha512-4jqsMO8ctL7c421/0J1o77DR1I8bgcDhOyYNC1iKuC9KA3kPZ2BkPIs6yOA6k8AUHrcNilkHhzX5nQF3nv9obA==}
+    requiresBuild: true
     dev: false
 
   /babylonjs/6.9.0:
